@@ -1,6 +1,6 @@
-package com.ek.kotlinmvp.presentation.Planetary
+package com.ek.kotlinmvp.presentation.planetary
 
-import com.ek.kotlinmvp.data.local.Planetary
+import com.ek.kotlinmvp.data.local.nasa.Planetary
 
 interface IPlanetaryView {
     fun onDataCompleteFromApi(planetary: Planetary)

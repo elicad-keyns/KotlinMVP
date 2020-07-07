@@ -1,4 +1,4 @@
-package com.ek.kotlinmvp.presentation.RickAndMorty
+package com.ek.kotlinmvp.presentation.heroFragment
 
 import RickAndMorty
 import com.ek.kotlinmvp.environment.IRickAndMortyAPI
@@ -6,7 +6,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RAMPresenter(internal var IRAMView: IRAMView) : IRAMPresenter {
+class RAMPresenter(internal var IRAMView: IRAMView) :
+    IRAMPresenter {
 
     override fun getDataFromAPI(page: Int) {
         IRickAndMortyAPI.create()

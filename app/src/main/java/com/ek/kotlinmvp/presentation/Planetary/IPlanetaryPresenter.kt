@@ -1,4 +1,4 @@
-package com.ek.kotlinmvp.presentation.Planetary
+package com.ek.kotlinmvp.presentation.planetary
 
 interface IPlanetaryPresenter {
     fun getDataFromApi()

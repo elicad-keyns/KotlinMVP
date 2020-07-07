@@ -1,8 +1,6 @@
-package com.ek.kotlinmvp.presentation.Login
+package com.ek.kotlinmvp.presentation.login
 
-import com.ek.kotlinmvp.data.local.User
-import com.ek.kotlinmvp.presentation.Login.ILoginPresenter
-import com.ek.kotlinmvp.presentation.Login.ILoginView
+import com.ek.kotlinmvp.data.local.login.User
 
 class LoginPresenter(internal var ILoginView: ILoginView):
     ILoginPresenter {

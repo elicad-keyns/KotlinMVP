@@ -1,4 +1,4 @@
-package com.ek.kotlinmvp.data.local
+package com.ek.kotlinmvp.data.local.nasa
 
 import com.google.gson.annotations.SerializedName
 

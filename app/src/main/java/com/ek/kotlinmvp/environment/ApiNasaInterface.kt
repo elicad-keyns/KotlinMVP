@@ -1,6 +1,6 @@
 package com.ek.kotlinmvp.environment
 
-import com.ek.kotlinmvp.data.local.Planetary
+import com.ek.kotlinmvp.data.local.nasa.Planetary
 import retrofit2.Call
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

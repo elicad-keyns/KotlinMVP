@@ -1,9 +1,7 @@
-package com.ek.kotlinmvp.presentation.Planetary
+package com.ek.kotlinmvp.presentation.planetary
 
 import com.ek.kotlinmvp.environment.ApiNasaInterface
-import com.ek.kotlinmvp.data.local.Planetary
-import com.ek.kotlinmvp.presentation.Planetary.IPlanetaryPresenter
-import com.ek.kotlinmvp.presentation.Planetary.IPlanetaryView
+import com.ek.kotlinmvp.data.local.nasa.Planetary
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

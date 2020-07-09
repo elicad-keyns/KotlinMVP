@@ -12,14 +12,74 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_hero"
         android:name="com.ek.kotlinmvp.presentation.heroFragment.HeroFragment"
         android:label="@string/title_heroes"
-        tools:layout="@layout/fragment_hero" />
+        tools:layout="@layout/fragment_hero" >
+        <action
+            android:id="@+id/action_navigation_hero_to_hero_info"
+            app:destination="@id/navigation_hero_info"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.ek.kotlinmvp.presentation.settingsFragment.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/navigation_hero_info"
+        android:name="com.ek.kotlinmvp.presentation.heroInfo.HeroInfoFragment"
+        android:label="fragment_hero_info"
+        tools:layout="@layout/fragment_hero_info" >
+        <action
+            android:id="@+id/action_navigation_hero_info_to_navigation_hero"
+            app:destination="@id/navigation_hero"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="heroId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="heroName"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroStatus"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroSpecies"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroType"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroGender"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroOrigin"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroLocation"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroCreated"
+            app:argType="string"
+            android:defaultValue="Неизвестно" />
+        <argument
+            android:name="heroImage"
+            app:argType="string"
+            android:defaultValue="https://rickandmortyapi.com/api/character/avatar/19.jpeg" />
+    </fragment>
+
 </navigation>

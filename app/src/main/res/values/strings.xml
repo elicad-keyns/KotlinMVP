@@ -24,4 +24,5 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_btm_nav2">MainActivity</string>
+    <string name="hero_image">Hero Image</string>
 </resources>

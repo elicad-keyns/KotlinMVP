@@ -1,5 +1,6 @@
 package com.ek.kotlinmvp.presentation.heroFragment
 
-interface IRAMPresenter {
+interface IHeroPresenter {
     fun getDataFromAPI(page: Int)
+
 }

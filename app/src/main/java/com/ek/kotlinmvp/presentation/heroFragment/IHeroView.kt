@@ -2,7 +2,7 @@ package com.ek.kotlinmvp.presentation.heroFragment
 
 import RickAndMorty
 
-interface IRAMView {
+interface IHeroView {
     fun onDataCompleteFromAPI(rickAndMorty: RickAndMorty)
     fun onDataErrorFromAPI(throwable: Throwable)
 }

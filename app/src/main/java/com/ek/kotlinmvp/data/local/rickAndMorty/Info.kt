@@ -1,3 +1,5 @@
+package com.ek.kotlinmvp.data.local.rickAndMorty
+
 import com.google.gson.annotations.SerializedName
 
 data class Info (

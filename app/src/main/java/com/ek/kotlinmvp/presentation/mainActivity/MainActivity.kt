@@ -1,5 +1,7 @@
 package com.ek.kotlinmvp.presentation.mainActivity
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -7,12 +9,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.ek.kotlinmvp.R
 import kotlinx.android.synthetic.main.activity_main.*
+import moxy.MvpAppCompatActivity
+import moxy.presenter.InjectPresenter
+import java.io.InputStream
 
-class MainActivity : AppCompatActivity(),
-    IMainActivityView {
+class MainActivity : MvpAppCompatActivity(), IMainActivityView {
 
-    //Презентеры
-    private lateinit var mainActivityPresenter: MainActivityPresenter
+    //Презентер
+    @InjectPresenter
+    lateinit var mainActivityPresenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,6 @@ class MainActivity : AppCompatActivity(),
         btm_nav_bar.setupWithNavController(navController)
 
         // Инициализация
-        mainActivityPresenter = MainActivityPresenter(this)
+        mainActivityPresenter = MainActivityPresenter()
     }
 }

@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/navigation_hero_info"
-        android:name="com.ek.kotlinmvp.presentation.heroInfo.HeroInfoFragment"
+        android:name="com.ek.kotlinmvp.presentation.heroInfoFragment.HeroInfoFragment"
         android:label="fragment_hero_info"
         tools:layout="@layout/fragment_hero_info" >
         <action
@@ -46,36 +46,36 @@
         <argument
             android:name="heroName"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroStatus"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroSpecies"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroType"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroGender"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroOrigin"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroLocation"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroCreated"
             app:argType="string"
-            android:defaultValue="Неизвестно" />
+            android:defaultValue="None" />
         <argument
             android:name="heroImage"
             app:argType="string"

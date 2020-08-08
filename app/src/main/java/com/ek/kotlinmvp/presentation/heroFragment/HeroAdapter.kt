@@ -1,18 +1,18 @@
 package com.ek.kotlinmvp.presentation.heroFragment
 
-import Results
+import com.ek.kotlinmvp.data.local.rickAndMorty.Results
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R
 
-class HeroAdapter(var items: List<Results>, var fragment: Fragment, val callback: Callback) :
+class HeroAdapter(var items: List<Results>, val context: Context, val callback: Callback) :
     RecyclerView.Adapter<HeroAdapter.HeroHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -43,7 +43,7 @@ class HeroAdapter(var items: List<Results>, var fragment: Fragment, val callback
             heroStatus.text = item.status
             heroName.text = item.name
             heroGender.text = item.gender
-            Glide.with(fragment).load(item.image).into(heroImage)
+            Glide.with(context).load(item.image).into(heroImage)
 
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])

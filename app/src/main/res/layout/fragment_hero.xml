@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".presentation.heroFragment.HeroFragment" >
 
+    <TextView
+        android:id="@+id/tv_connect"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Нет соединения"
+        android:textColor="@color/colorRed"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ProgressBar
         android:id="@+id/pb_hero"
         android:layout_width="100dp"
@@ -15,6 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_heroes"

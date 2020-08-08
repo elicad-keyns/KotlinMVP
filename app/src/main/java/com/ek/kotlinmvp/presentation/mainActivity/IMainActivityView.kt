@@ -1,5 +1,5 @@
 package com.ek.kotlinmvp.presentation.mainActivity
 
-interface IMainActivityView {
+import moxy.MvpView
 
-}
+interface IMainActivityView: MvpView

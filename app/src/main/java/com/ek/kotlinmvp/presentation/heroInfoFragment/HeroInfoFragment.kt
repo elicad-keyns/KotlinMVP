@@ -1,4 +1,4 @@
-package com.ek.kotlinmvp.presentation.heroInfo
+package com.ek.kotlinmvp.presentation.heroInfoFragment
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -12,8 +12,12 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R
 import kotlinx.android.synthetic.main.fragment_hero_info.*
+import moxy.InjectViewState
+import moxy.MvpAppCompatFragment
+import moxy.MvpView
+import moxy.presenter.InjectPresenter
 
-class HeroInfoFragment : Fragment(), IHeroInfoView {
+class HeroInfoFragment : MvpAppCompatFragment(R.layout.fragment_hero_info), IHeroInfoView {
 
     // Аргументы, которые передаются из фрагмента HeroFragment (ид, имя и т.д)
     val args: HeroInfoFragmentArgs by navArgs()
@@ -26,10 +30,11 @@ class HeroInfoFragment : Fragment(), IHeroInfoView {
         super.onViewCreated(view, savedInstanceState)
 
         // Инициализация
-        heroInfoPresenter = HeroInfoPresenter(IHeroInfoView = this)
+        @InjectPresenter
+        heroInfoPresenter = HeroInfoPresenter()
 
         // Вставляем текст в текстбоксы, загружаем картинку
-        Glide.with(view).load(args.heroImage).into(hero_info_image)
+        Glide.with(requireActivity().applicationContext).load(args.heroImage).into(hero_info_image)
         hero_info_id.text = "Id: " + args.heroId.toString()
         hero_info_name.text = "Name: " + args.heroName
         hero_info_status.text = "Status: " + args.heroStatus
@@ -46,16 +51,16 @@ class HeroInfoFragment : Fragment(), IHeroInfoView {
 
         // Кнопка открывающая полную инфу о персонаже
         b_hero_info_back.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_navigation_hero_info_to_navigation_hero)
+            requireActivity().onBackPressed()
         }
     }
 
+    /*
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate(R.layout.fragment_hero_info, container, false)
 
         return root
     }
-
+    */
 }

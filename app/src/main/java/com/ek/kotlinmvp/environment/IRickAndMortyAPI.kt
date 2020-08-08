@@ -1,8 +1,9 @@
 package com.ek.kotlinmvp.environment
 
-import RickAndMorty
+import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
 import com.ek.kotlinmvp.data.common.RAM_BASE_URL
 import retrofit2.Call
+import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ interface IRickAndMortyAPI {
 
     companion object Factory {
         fun create(): IRickAndMortyAPI {
-            val retrofit = retrofit2.Retrofit.Builder()
+            val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(RAM_BASE_URL)

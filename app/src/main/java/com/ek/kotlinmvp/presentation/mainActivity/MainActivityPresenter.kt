@@ -1,6 +1,7 @@
 package com.ek.kotlinmvp.presentation.mainActivity
 
-class MainActivityPresenter(internal var IMainActivityView: IMainActivityView) :
-    IMainActivityPresenter {
+import moxy.InjectViewState
+import moxy.MvpPresenter
 
-}
+@InjectViewState
+class MainActivityPresenter(): MvpPresenter<IMainActivityView>()

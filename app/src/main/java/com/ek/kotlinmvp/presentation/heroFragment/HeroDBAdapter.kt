@@ -1,6 +1,5 @@
 package com.ek.kotlinmvp.presentation.heroFragment
 
-import com.ek.kotlinmvp.data.local.rickAndMorty.Results
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -11,9 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R
+import com.ek.kotlinmvp.data.db.entity.Hero
 
-class HeroAdapter(var items: List<Results>, val context: Context, val callback: Callback) :
-    RecyclerView.Adapter<HeroAdapter.HeroHolder>() {
+class HeroDBAdapter(var items: List<Hero>, val context: Context, val callback: Callback) :
+    RecyclerView.Adapter<HeroDBAdapter.HeroHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HeroHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false))
@@ -32,18 +32,18 @@ class HeroAdapter(var items: List<Results>, val context: Context, val callback: 
         private val heroGender = itemView.findViewById<TextView>(R.id.hero_gender)
         private val heroImage = itemView.findViewById<ImageView>(R.id.hero_image)
 
-        fun bind(item: Results) {
+        fun bind(item: Hero) {
 
-            if (item.status == "Alive")
+            if (item.hero_status == "Alive")
                 heroStatus.setTextColor(Color.GREEN)
-            else if (item.status == "Dead")
+            else if (item.hero_status == "Dead")
                 heroStatus.setTextColor(Color.RED)
 
-            heroId.text = item.id.toString()
-            heroStatus.text = item.status
-            heroName.text = item.name
-            heroGender.text = item.gender
-            Glide.with(context).load(item.image).into(heroImage)
+            heroId.text = item.hero_id.toString()
+            heroStatus.text = item.hero_status
+            heroName.text = item.hero_name
+            heroGender.text = item.hero_gender
+            Glide.with(context).load(item.hero_image).into(heroImage)
 
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[adapterPosition])
@@ -52,7 +52,7 @@ class HeroAdapter(var items: List<Results>, val context: Context, val callback: 
     }
 
     interface Callback {
-        fun onItemClicked(item: Results)
+        fun onItemClicked(item: Hero)
     }
 
 }

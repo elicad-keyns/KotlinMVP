@@ -1,4 +1,4 @@
-package com.ek.kotlinmvp.presentation.heroFragment
+package com.ek.kotlinmvp.presentation.homeFragment
 
 import android.content.Context
 import android.widget.Toast
@@ -7,7 +7,6 @@ import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
 import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
 import com.ek.kotlinmvp.environment.IRickAndMortyAPI
-import com.ek.kotlinmvp.other.NetworkMonitorUtil
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.Call
@@ -15,11 +14,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @InjectViewState
-class HeroPresenter : MvpPresenter<IHeroView>() {
+class HomePresenter() : MvpPresenter<IHomeView>() {
 
     lateinit var context: Context
-
-    // private lateinit var networkMonitor: NetworkMonitorUtil
 
     // текущая страница
     var page: Int = 1
@@ -31,24 +28,8 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        getDataFromAPI(page = page)
+        getDataFromAPI(page = 1)
         //checkConnection(context)
-    }
-
-    // Метод для переключения страницы вперед
-    fun pageNext() {
-        if ((maxPages != null) && (page < maxPages!!)) {
-            page++
-            getDataFromAPI(page = page)
-        }
-    }
-
-    // Метод для переключения страницы назад
-    fun pagePrev() {
-        if (page > 1) {
-            page--
-            getDataFromAPI(page = page)
-        }
     }
 
     fun recordData(rickAndMorty: RickAndMorty) {
@@ -100,42 +81,4 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
             })
     }
 
-//    fun networkRegister() {
-//        networkMonitor.register()
-//    }
-//
-//    fun networkUnregister() {
-//        networkMonitor.unregister()
-//    }
-
-//    private fun checkConnection(context: Context) {
-//        // Создание класса для проверки соединения
-//        networkMonitor = NetworkMonitorUtil(context = context)
-//
-//        networkMonitor.result = { isAvailable, type ->
-//            when (isAvailable) {
-//                true -> {
-//                    viewState.hideConnectFail()
-//                    viewState.openLoading()
-//                    getDataFromAPI(page = page)
-//                    //region ConnectionTypes
-//                    //when (type) {
-//                    //    ConnectionType.Wifi -> {
-//                    //        getDataFromAPI(page = page)
-//                    //    }
-//                    //    ConnectionType.Cellular -> {
-//                    //        getDataFromAPI(page = page)
-//                    //    }
-//                    //}
-//                    //endregion
-//                }
-//                false -> {
-//                    Toast.makeText(context, "Нет соединения", Toast.LENGTH_SHORT).show()
-//                    viewState.hideLoading()
-//                    viewState.openConnectFail()
-//                    getDataFromAPI(page = page)
-//                }
-//            }
-//        }
-//    }
 }

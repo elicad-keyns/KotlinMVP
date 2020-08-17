@@ -12,14 +12,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 import com.ek.kotlinmvp.R
+import com.ek.kotlinmvp.data.db.HeroDatabase
+import com.ek.kotlinmvp.data.db.dao.HeroDao
+import com.ek.kotlinmvp.data.db.entity.Hero
 import com.ek.kotlinmvp.data.local.rickAndMorty.Results
 import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
 import com.ek.kotlinmvp.other.ConnectionType
 import com.ek.kotlinmvp.other.NetworkMonitorUtil
 import kotlinx.android.synthetic.main.fragment_hero.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
+import java.time.chrono.HijrahEra
 
 class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
 
@@ -29,16 +35,6 @@ class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
 
     // Вьюшка
     private lateinit var root: View
-
-    override fun onResume() {
-        super.onResume()
-        heroPresenter.networkRegister()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        heroPresenter.networkUnregister()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,54 +69,12 @@ class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
         return root
     }
 
-    // Если получили ответ апи
-    override fun onDataCompleteFromAPI(rickAndMorty: RickAndMorty) {
-        // Проверяем, есть ли переменная с максимальным кол-вом страниц, если нету, то создаем
-        if (heroPresenter.maxPages == null) heroPresenter.maxPages = rickAndMorty.info.pages
-
-        // При нажатии на героя, открываем окно с полной информацией о нем
-        val heroAdapter = HeroAdapter(
-            rickAndMorty.results,
-            requireActivity().applicationContext,
-            object : HeroAdapter.Callback {
-                override fun onItemClicked(item: Results) {
-                    val action = HeroFragmentDirections.actionNavigationHeroToHeroInfo(
-                        item.id,
-                        item.name,
-                        item.status,
-                        item.species,
-                        item.type,
-                        item.gender,
-                        item.origin.name,
-                        item.location.name,
-                        item.created,
-                        item.image
-                    )
-                    Navigation.findNavController(root).navigate(action)
-                }
-            })
-
-        // Скрываем прогресс бар
-        hideLoading()
-
-        // Проверяем ссылку на объект (Если попытаться быстро переключить фрагменты, то может вылететь ошибка без этого)
-        rv_heroes?.let {
-            it.adapter = heroAdapter
-        }
-    }
-
-    // Если не получили ответ апи
-    override fun onDataErrorFromAPI(throwable: Throwable) {
-        Toast.makeText(activity, "Ошибка -> " + throwable.localizedMessage, LENGTH_SHORT).show()
-        hideLoading()
-        openConnectFail()
-    }
-
     // Показываем текущую страницу
     override fun setPageText() {
         tv_page.text = heroPresenter.page.toString()
     }
 
+    //region open/hide ui
     // Открыть загрузку и скрить recycler
     override fun openLoading() {
         rv_heroes.visibility = GONE
@@ -141,6 +95,109 @@ class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
     override fun hideConnectFail() {
         tv_connect.visibility = GONE
     }
+    //endregion
+
+    override fun getDataFromDB(page: Int) {
+        val db: HeroDatabase? = HeroDatabase.getHeroDatabase(context = requireContext())
+        val heroDao: HeroDao? = db?.heroDao()
+
+        val heroes: List<Hero> = heroDao!!.getHeroesByPage(hero_page = page)
+
+        if (heroes.isNullOrEmpty()) {
+            openConnectFail()
+            hideLoading()
+            rv_heroes.visibility = GONE
+            return
+        } else {
+            rv_heroes.visibility = VISIBLE
+            // Скрываем прогресс бар и ошибку соединения
+            hideLoading()
+            hideConnectFail()
+        }
+
+        // Получаем макс страницы с бд
+        if (heroPresenter.maxPages == null)
+            if (heroes[0].hero_max_pages != null)
+                heroPresenter.maxPages = heroes[0].hero_max_pages
+
+        val heroDBAdapter: HeroDBAdapter = HeroDBAdapter(
+            heroes,
+            requireContext(),
+            object : HeroDBAdapter.Callback {
+                override fun onItemClicked(item: Hero) {
+                    val action = HeroFragmentDirections.actionNavigationHeroToHeroInfo(
+                        item.hero_id,
+                        item.hero_name,
+                        item.hero_status,
+                        item.hero_species,
+                        item.hero_type,
+                        item.hero_gender,
+                        item.hero_origin_name,
+                        item.hero_location_name,
+                        item.hero_created,
+                        item.hero_image
+                    )
+                    Navigation.findNavController(root).navigate(action)
+                }
+            })
 
 
+        // Проверяем ссылку на объект (Если попытаться быстро переключить фрагменты, то может вылететь ошибка без этого)
+        rv_heroes?.let {
+            it.adapter = heroDBAdapter
+        }
+    }
+
+//    override fun onResume() {
+//        super.onResume()
+//        //heroPresenter.networkRegister()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        //heroPresenter.networkUnregister()
+//    }
+
+//    // Если получили ответ апи
+//    override fun onDataCompleteFromAPI(rickAndMorty: RickAndMorty) {
+//        // Проверяем, есть ли переменная с максимальным кол-вом страниц, если нету, то создаем
+//        if (heroPresenter.maxPages == null) heroPresenter.maxPages = rickAndMorty.info.pages
+//
+//        // При нажатии на героя, открываем окно с полной информацией о нем
+//        val heroAdapter = HeroAdapter(
+//            rickAndMorty.results,
+//            requireContext(),
+//            object : HeroAdapter.Callback {
+//                override fun onItemClicked(item: Results) {
+//                    val action = HeroFragmentDirections.actionNavigationHeroToHeroInfo(
+//                        item.id,
+//                        item.name,
+//                        item.status,
+//                        item.species,
+//                        item.type,
+//                        item.gender,
+//                        item.origin.name,
+//                        item.location.name,
+//                        item.created,
+//                        item.image
+//                    )
+//                    Navigation.findNavController(root).navigate(action)
+//                }
+//            })
+//
+//        // Скрываем прогресс бар
+//        hideLoading()
+//
+//        // Проверяем ссылку на объект (Если попытаться быстро переключить фрагменты, то может вылететь ошибка без этого)
+//        rv_heroes?.let {
+//            it.adapter = heroAdapter
+//        }
+//    }
+//
+//    // Если не получили ответ апи
+//    override fun onDataErrorFromAPI(throwable: Throwable) {
+//        Toast.makeText(activity, "Ошибка -> " + throwable.localizedMessage, LENGTH_SHORT).show()
+//        hideLoading()
+//        openConnectFail()
+//    }
 }

@@ -4,4 +4,4 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class HeroInfoPresenter(): MvpPresenter<IHeroInfoView>()
+class HeroInfoPresenter : MvpPresenter<IHeroInfoView>()

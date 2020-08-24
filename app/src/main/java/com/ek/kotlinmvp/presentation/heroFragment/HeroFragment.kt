@@ -1,31 +1,20 @@
 package com.ek.kotlinmvp.presentation.heroFragment
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
 import com.ek.kotlinmvp.R
 import com.ek.kotlinmvp.data.db.HeroDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
-import com.ek.kotlinmvp.data.local.rickAndMorty.Results
-import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
-import com.ek.kotlinmvp.other.ConnectionType
-import com.ek.kotlinmvp.other.NetworkMonitorUtil
 import kotlinx.android.synthetic.main.fragment_hero.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
-import java.time.chrono.HijrahEra
 
 class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
 

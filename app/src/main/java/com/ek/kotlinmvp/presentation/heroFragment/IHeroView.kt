@@ -1,10 +1,5 @@
 package com.ek.kotlinmvp.presentation.heroFragment
 
-import android.widget.ProgressBar
-import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.ek.kotlinmvp.data.db.entity.Hero
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType

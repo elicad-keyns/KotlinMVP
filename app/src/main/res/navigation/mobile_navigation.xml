@@ -9,7 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="com.ek.kotlinmvp.presentation.homeFragment.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_hero_info"
+            app:destination="@id/navigation_hero_info" />
+        <action
+            android:id="@+id/action_navigation_home_to_homeInfoFragment"
+            app:destination="@id/homeInfoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_hero"
@@ -34,11 +41,6 @@
         android:name="com.ek.kotlinmvp.presentation.heroInfoFragment.HeroInfoFragment"
         android:label="fragment_hero_info"
         tools:layout="@layout/fragment_hero_info" >
-        <action
-            android:id="@+id/action_navigation_hero_info_to_navigation_hero"
-            app:destination="@id/navigation_hero"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right" />
         <argument
             android:name="heroId"
             app:argType="integer"
@@ -80,6 +82,54 @@
             android:name="heroImage"
             app:argType="string"
             android:defaultValue="https://rickandmortyapi.com/api/character/avatar/19.jpeg" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeInfoFragment"
+        android:name="com.ek.kotlinmvp.presentation.homeInfoFragment.HomeInfoFragment"
+        android:label="fragment_home_info"
+        tools:layout="@layout/fragment_home_info" >
+    <argument
+        android:name="heroId"
+        app:argType="integer"
+        android:defaultValue="0" />
+    <argument
+        android:name="heroName"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroStatus"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroSpecies"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroType"
+        app:argType="string"
+        app:nullable="true"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroGender"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroOrigin"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroLocation"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroCreated"
+        app:argType="string"
+        android:defaultValue="None" />
+    <argument
+        android:name="heroImage"
+        app:argType="string"
+        android:defaultValue="https://rickandmortyapi.com/api/character/avatar/19.jpeg" />
     </fragment>
 
 </navigation>

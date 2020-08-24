@@ -2,10 +2,6 @@ package com.ek.kotlinmvp.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ek.kotlinmvp.data.local.rickAndMorty.Location
-import com.ek.kotlinmvp.data.local.rickAndMorty.Origin
-import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
-import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Hero(

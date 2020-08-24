@@ -4,4 +4,4 @@ import moxy.InjectViewState
 import moxy.MvpPresenter
 
 @InjectViewState
-class MainActivityPresenter(): MvpPresenter<IMainActivityView>()
+class MainActivityPresenter : MvpPresenter<IMainActivityView>()

@@ -1,10 +1,8 @@
 package com.ek.kotlinmvp.data.local.rickAndMorty
 
-import com.ek.kotlinmvp.data.local.rickAndMorty.Origin
 import com.google.gson.annotations.SerializedName
 
 data class Results (
-
 	@SerializedName("id") val id : Int,
 	@SerializedName("name") val name : String,
 	@SerializedName("status") val status : String,

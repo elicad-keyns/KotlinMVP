@@ -2,6 +2,7 @@ package com.ek.kotlinmvp.presentation.homeFragment
 
 import android.content.Context
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.ek.kotlinmvp.data.db.HeroDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
@@ -14,22 +15,31 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @InjectViewState
-class HomePresenter() : MvpPresenter<IHomeView>() {
+class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
 
     lateinit var context: Context
 
+    private lateinit var rv_home_heroes: RecyclerView
+
     // текущая страница
-    var page: Int = 1
+    var heroPage: Int = 1
 
     // Максимальное кол-во страниц
     var maxPages: Int? = null
+
+    lateinit var heroDBAdapter: HeroDBAdapter
+
+    var heroes: ArrayList<Hero> = ArrayList()
 
     // Первый запуск вьюшки
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        getDataFromAPI(page = 1)
-        //checkConnection(context)
+        createAdapter()
+
+        getDataFromAPI(page = heroPage)
+        viewState.setRefreshing()
+        viewState.openLoading()
     }
 
     fun recordData(rickAndMorty: RickAndMorty) {
@@ -50,13 +60,12 @@ class HomePresenter() : MvpPresenter<IHomeView>() {
                 hero_location_name = result.location.name,
                 hero_image = result.image,
                 hero_created = result.created,
-                hero_page = page,
+                hero_page = heroPage,
                 hero_max_pages = maxPages
             )
             heroDao?.insertHero(hero)
         }
-
-        Toast.makeText(context, "Record Data:\nPage ->$page\nMaxPages -> $maxPages", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Record Data:\nPage ->$heroPage\nMaxPages -> $maxPages", Toast.LENGTH_SHORT).show()
     }
 
     // Старт запроса и получение инфы
@@ -65,20 +74,83 @@ class HomePresenter() : MvpPresenter<IHomeView>() {
             .getCharacterPage(page = page)
             .enqueue(object : Callback<RickAndMorty> {
                 override fun onFailure(call: Call<RickAndMorty>, t: Throwable) {
-                    // viewState.onDataErrorFromAPI(t)
-                    viewState.getDataFromDB(page = page)
+                    viewState.openLoading()
+                    getDataFromDB(page = page)
                 }
 
                 override fun onResponse(
                     call: Call<RickAndMorty>,
                     response: Response<RickAndMorty>
                 ) {
-                    //viewState.onDataCompleteFromAPI(response.body() as RickAndMorty)
                     recordData(response.body() as RickAndMorty)
-                    viewState.getDataFromDB(page = page)
-
+                    getDataFromDB(page = page)
                 }
             })
     }
 
+    fun getDataFromDB(page: Int) {
+        val db: HeroDatabase? = HeroDatabase.getHeroDatabase(context = context)
+        val heroDao: HeroDao? = db?.heroDao()
+
+        heroes = ArrayList(heroDao!!.getHeroesByPage(hero_page = page))
+
+        // Получаем макс страницы с бд
+        if (maxPages == null)
+            if (heroes[0].hero_max_pages != null)
+                maxPages = heroes[0].hero_max_pages
+
+        heroDBAdapter.insert(heroes)
+
+        heroDBAdapter.isLoaded()
+        viewState.hideLoading()
+        viewState.isRefreshed()
+    }
+
+    private fun createAdapter() {
+        heroDBAdapter = HeroDBAdapter(
+            heroes,
+            context,
+            rv_home_heroes,
+            object : HeroDBAdapter.Callback {
+                override fun onItemClicked(item: Hero) {
+                    val action = HomeFragmentDirections.actionNavigationHomeToHomeInfoFragment(
+                        item.hero_id,
+                        item.hero_name,
+                        item.hero_status,
+                        item.hero_species,
+                        item.hero_type,
+                        item.hero_gender,
+                        item.hero_origin_name,
+                        item.hero_location_name,
+                        item.hero_created,
+                        item.hero_image
+                    )
+                    viewState.navigate(action = action)
+                }
+            })
+
+        if (rv_home_heroes.adapter == null) {
+            viewState.setAdapter(heroDBAdapter)
+        }
+
+        if (heroDBAdapter.loaderIsEmpty())
+            heroDBAdapter.setLoader(this)
+    }
+
+    fun getRecycler(_recycler: RecyclerView) {
+        rv_home_heroes = _recycler
+    }
+
+    fun resetData() {
+        heroDBAdapter.clearData()
+        heroPage = 1
+        getDataFromAPI(page = heroPage)
+    }
+
+    override fun onLoadHero() {
+        if (heroPage < maxPages!!) {
+            heroPage++
+            getDataFromAPI(heroPage)
+        }
+    }
 }

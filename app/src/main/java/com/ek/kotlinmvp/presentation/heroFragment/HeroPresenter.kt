@@ -7,7 +7,6 @@ import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
 import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
 import com.ek.kotlinmvp.environment.IRickAndMortyAPI
-import com.ek.kotlinmvp.other.NetworkMonitorUtil
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.Call
@@ -18,8 +17,6 @@ import retrofit2.Response
 class HeroPresenter : MvpPresenter<IHeroView>() {
 
     lateinit var context: Context
-
-    // private lateinit var networkMonitor: NetworkMonitorUtil
 
     // текущая страница
     var page: Int = 1
@@ -32,7 +29,6 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
         super.onFirstViewAttach()
 
         getDataFromAPI(page = page)
-        //checkConnection(context)
     }
 
     // Метод для переключения страницы вперед

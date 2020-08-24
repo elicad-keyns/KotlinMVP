@@ -25,7 +25,7 @@ class HomeInfoFragment : MvpAppCompatFragment(R.layout.fragment_home_info), IHom
         super.onCreate(savedInstanceState)
 
         // Вставляем текст в текстбоксы, загружаем картинку
-        // Glide.with(requireActivity().applicationContext).load(args.heroImage).into(home_info_image)
+        Glide.with(requireActivity().applicationContext).load(args.heroImage).into(home_info_image)
         home_info_id.text       = "Id: ${args.heroId}"
         home_info_name.text     = "Name: ${args.heroName}"
         home_info_status.text   = "Status: ${args.heroStatus}"

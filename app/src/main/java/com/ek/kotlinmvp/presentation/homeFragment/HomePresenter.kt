@@ -153,4 +153,10 @@ class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
             getDataFromAPI(heroPage)
         }
     }
+
+    // Test
+    override fun onOpenLoading() {
+        if (heroPage < maxPages!!)
+            viewState.openLoading()
+    }
 }

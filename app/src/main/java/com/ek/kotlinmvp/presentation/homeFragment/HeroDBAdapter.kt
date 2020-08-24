@@ -6,20 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R
 import com.ek.kotlinmvp.data.db.entity.Hero
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class HeroDBAdapter(var items: ArrayList<Hero>, val context: Context, recyclerView: RecyclerView, val callback: Callback) :
     RecyclerView.Adapter<HeroDBAdapter.HeroHolder>() {
 
+//    internal var colors: List<String> = listOf(
+//        "#eab595",
+//        "#d87f81",
+//        "#ae6378",
+//        "#79616f",
+//        "#7e9680"
+//    )
+
     internal var loadMore: ILoadHero? = null
     internal var isLoading: Boolean = false
-    internal var visibleThreshold: Int = 5
+    internal var visibleThreshold: Int = 1
     internal var lastVisibleItem: Int = 0
     internal var totalItemCount: Int = 0
 
@@ -35,6 +49,8 @@ class HeroDBAdapter(var items: ArrayList<Hero>, val context: Context, recyclerVi
                 if (!isLoading && visibleThreshold >= totalItemCount - lastVisibleItem)
                     if (loadMore != null) {
                         loadMore!!.onLoadHero()
+                        //Test
+                        loadMore!!.onOpenLoading()
                         isLoading = true
                     }
             }
@@ -57,8 +73,12 @@ class HeroDBAdapter(var items: ArrayList<Hero>, val context: Context, recyclerVi
         private val heroName = itemView.findViewById<TextView>(R.id.hero_name)
         private val heroGender = itemView.findViewById<TextView>(R.id.hero_gender)
         private val heroImage = itemView.findViewById<ImageView>(R.id.hero_image)
+        private val heroBackground = itemView.findViewById<CardView>(R.id.cv_hero)
 
         fun bind(item: Hero) {
+
+            // Test
+            // heroBackground.setCardBackgroundColor(Color.parseColor(colors.random()))
 
             if (item.hero_status == "Alive")
                 heroStatus.setTextColor(Color.GREEN)

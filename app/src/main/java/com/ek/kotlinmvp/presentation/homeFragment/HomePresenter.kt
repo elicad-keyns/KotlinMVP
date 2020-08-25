@@ -1,7 +1,9 @@
 package com.ek.kotlinmvp.presentation.homeFragment
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.ek.kotlinmvp.data.db.HeroDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
@@ -18,6 +20,7 @@ import retrofit2.Response
 class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
 
     lateinit var context: Context
+    lateinit var view: View
 
     private lateinit var rv_home_heroes: RecyclerView
 
@@ -113,7 +116,7 @@ class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
             rv_home_heroes,
             object : HeroDBAdapter.Callback {
                 override fun onItemClicked(item: Hero) {
-                    val action = HomeFragmentDirections.actionNavigationHomeToHomeInfoFragment(
+                    val action = HomeFragmentDirections.actionNavigationHomeToNavigationHeroInfo2(
                         item.hero_id,
                         item.hero_name,
                         item.hero_status,
@@ -125,7 +128,7 @@ class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
                         item.hero_created,
                         item.hero_image
                     )
-                    viewState.navigate(action = action)
+                    Navigation.findNavController(view).navigate(action)
                 }
             })
 
@@ -138,7 +141,7 @@ class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
     }
 
     fun getRecycler(_recycler: RecyclerView) {
-        rv_home_heroes = _recycler
+        this.rv_home_heroes = _recycler
     }
 
     fun resetData() {
@@ -158,5 +161,9 @@ class HomePresenter : MvpPresenter<IHomeView>(), ILoadHero {
     override fun onOpenLoading() {
         if (heroPage < maxPages!!)
             viewState.openLoading()
+    }
+
+    fun setViewNav(view: View) {
+        this.view = view
     }
 }

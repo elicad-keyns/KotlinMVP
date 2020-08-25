@@ -41,6 +41,7 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
         super.onViewCreated(view, savedInstanceState)
 
         root = view
+        homePresenter.setViewNav(root)
 
         homePresenter.getRecycler(rv_home_heroes)
     }

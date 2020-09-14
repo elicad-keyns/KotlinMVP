@@ -7,10 +7,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ek.kotlinmvp.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment

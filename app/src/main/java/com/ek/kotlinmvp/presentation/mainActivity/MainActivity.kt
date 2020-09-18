@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.ek.kotlinmvp.R
+import com.ek.kotlinmvp.other.MainApplication
 import kotlinx.android.synthetic.main.activity_main.*
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
@@ -20,7 +21,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainActivity
 
         // Настройка боттом бара
         val navController: NavController = findNavController(R.id.fragment)
-        btm_nav_bar.setupWithNavController(navController)
+        btmNavBar.setupWithNavController(navController)
     }
 
 

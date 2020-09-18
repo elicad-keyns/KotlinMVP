@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
+import com.ek.kotlinmvp.other.MainApplication
 
 @Database(entities = [Hero::class], version = 1)
 abstract class HeroDatabase: RoomDatabase() {
@@ -14,10 +15,10 @@ abstract class HeroDatabase: RoomDatabase() {
     companion object {
         var INSTANCE: HeroDatabase? = null
 
-        fun getHeroDatabase(context: Context): HeroDatabase? {
+        fun getHeroDatabase(): HeroDatabase? {
             if (INSTANCE == null) {
                 synchronized(HeroDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, HeroDatabase::class.java, "HeroDB")
+                    INSTANCE = Room.databaseBuilder(MainApplication.context, HeroDatabase::class.java, "HeroDB")
                         .allowMainThreadQueries()
                         .build()
                 }

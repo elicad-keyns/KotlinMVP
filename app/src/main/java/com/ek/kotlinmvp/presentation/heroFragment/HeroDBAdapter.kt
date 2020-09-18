@@ -26,11 +26,11 @@ class HeroDBAdapter(var items: List<Hero>, val context: Context, val callback: C
 
     inner class HeroHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val heroId = itemView.findViewById<TextView>(R.id.hero_id)
-        private val heroStatus = itemView.findViewById<TextView>(R.id.hero_status)
-        private val heroName = itemView.findViewById<TextView>(R.id.hero_name)
-        private val heroGender = itemView.findViewById<TextView>(R.id.hero_gender)
-        private val heroImage = itemView.findViewById<ImageView>(R.id.hero_image)
+        private val heroId = itemView.findViewById<TextView>(R.id.heroId)
+        private val heroStatus = itemView.findViewById<TextView>(R.id.heroStatus)
+        private val heroName = itemView.findViewById<TextView>(R.id.heroName)
+        private val heroGender = itemView.findViewById<TextView>(R.id.heroGender)
+        private val heroImage = itemView.findViewById<ImageView>(R.id.heroImage)
 
         fun bind(item: Hero) {
 

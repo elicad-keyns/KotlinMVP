@@ -5,8 +5,8 @@ import android.widget.Toast
 import com.ek.kotlinmvp.data.db.HeroDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
-import com.ek.kotlinmvp.data.local.rickAndMorty.RickAndMorty
-import com.ek.kotlinmvp.environment.IRickAndMortyAPI
+import com.ek.kotlinmvp.data.net.RickAndMorty
+import com.ek.kotlinmvp.environment.Factory
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.Call
@@ -48,7 +48,7 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
     }
 
     fun recordData(rickAndMorty: RickAndMorty) {
-        val db: HeroDatabase? = HeroDatabase.getHeroDatabase(context = context)
+        val db: HeroDatabase? = HeroDatabase.getHeroDatabase()
         val heroDao: HeroDao? = db?.heroDao()
 
         maxPages = rickAndMorty.info.pages
@@ -76,7 +76,7 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
 
     // Старт запроса и получение инфы
     private fun getDataFromAPI(page: Int) {
-        IRickAndMortyAPI.create()
+        Factory.create()
             .getCharacterPage(page = page)
             .enqueue(object : Callback<RickAndMorty> {
                 override fun onFailure(call: Call<RickAndMorty>, t: Throwable) {

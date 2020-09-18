@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".presentation.heroInfoFragment.HeroInfoFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_hero_info_image"
+        android:id="@+id/cvHeroInfoImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:cardCornerRadius="50dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
         <ImageView
-            android:id="@+id/hero_info_image"
+            android:id="@+id/heroInfoImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/hero_image"/>
@@ -30,11 +31,11 @@
         android:layout_height="0dp"
         android:layout_margin="8dp"
         app:cardElevation="8dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/b_hero_info_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_hero_info_image">
+        app:layout_constraintTop_toBottomOf="@+id/cvHeroInfoImage">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -48,73 +49,73 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hero_info_image">
+                app:layout_constraintTop_toBottomOf="@+id/heroInfoImage">
 
 
                 <TextView
-                    android:id="@+id/hero_info_id"
+                    android:id="@+id/heroInfoId"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="id: " />
+                    android:text="@string/id" />
 
                 <TextView
-                    android:id="@+id/hero_info_name"
+                    android:id="@+id/heroInfoName"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="name: " />
+                    android:text="@string/name" />
 
                 <TextView
-                    android:id="@+id/hero_info_status"
+                    android:id="@+id/heroInfoStatus"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="status: " />
-
-
-                <TextView
-                    android:id="@+id/hero_info_species"
-                    style="@style/LinearLayoutItemStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="species: " />
+                    android:text="@string/status" />
 
 
                 <TextView
-                    android:id="@+id/hero_info_type"
+                    android:id="@+id/heroInfoSpecies"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="type: " />
+                    android:text="@string/species" />
+
 
                 <TextView
-                    android:id="@+id/hero_info_gender"
+                    android:id="@+id/heroInfoType"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="gender: " />
+                    android:text="@string/type" />
 
                 <TextView
-                    android:id="@+id/hero_info_origin"
+                    android:id="@+id/heroInfoGender"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="origin: " />
+                    android:text="@string/gender" />
 
                 <TextView
-                    android:id="@+id/hero_info_location"
+                    android:id="@+id/heroInfoOrigin"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="location: " />
+                    android:text="@string/origin" />
 
                 <TextView
-                    android:id="@+id/hero_info_created"
+                    android:id="@+id/heroInfoLocation"
                     style="@style/LinearLayoutItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="created: " />
+                    android:text="@string/location" />
+
+                <TextView
+                    android:id="@+id/heroInfoCreated"
+                    style="@style/LinearLayoutItemStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/created" />
 
             </LinearLayout>
 
@@ -128,8 +129,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:elevation="8dp"
+        
         android:background="@drawable/button_style"
-        android:text="Назад"
+        android:text="@string/back"
+        android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -87,7 +87,7 @@ class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
     //endregion
 
     override fun getDataFromDB(page: Int) {
-        val db: HeroDatabase? = HeroDatabase.getHeroDatabase(context = requireContext())
+        val db: HeroDatabase? = HeroDatabase.getHeroDatabase()
         val heroDao: HeroDao? = db?.heroDao()
 
         val heroes: List<Hero> = heroDao!!.getHeroesByPage(hero_page = page)

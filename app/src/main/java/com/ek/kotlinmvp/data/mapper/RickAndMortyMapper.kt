@@ -12,7 +12,7 @@ private fun ArrayList<Results>.toArrayLocalResults() =
     this.map { it.toLocalResults() }.toCollection(ArrayList())
 
 private fun Results.toLocalResults() = LocalResults(
-    localId = id,
+    localId = id.toString(),
     localName = name,
     localStatus = status,
     localSpecies = species,

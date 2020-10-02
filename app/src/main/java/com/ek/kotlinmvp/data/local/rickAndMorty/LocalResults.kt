@@ -5,7 +5,7 @@ import com.ek.kotlinmvp.data.net.Origin
 import com.google.gson.annotations.SerializedName
 
 data class LocalResults(
-    val localId: Int,
+    val localId: String,
     val localName: String,
     val localStatus: String,
     val localSpecies: String,

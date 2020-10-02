@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Hero(
     @PrimaryKey(autoGenerate = false)
-    val hero_id : Int,
+    val hero_id : String,
     val hero_name : String,
     val hero_status : String,
     val hero_species : String,

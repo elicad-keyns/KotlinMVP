@@ -40,7 +40,7 @@
         tools:layout="@layout/fragment_hero_info" >
         <argument
             android:name="heroId"
-            app:argType="integer"
+            app:argType="string"
             android:defaultValue="0" />
         <argument
             android:name="heroName"

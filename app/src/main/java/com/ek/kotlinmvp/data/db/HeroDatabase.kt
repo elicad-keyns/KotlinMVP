@@ -1,9 +1,9 @@
 package com.ek.kotlinmvp.data.db
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ek.kotlinmvp.data.common.RAM_BASE_DB_NAME
 import com.ek.kotlinmvp.data.db.dao.HeroDao
 import com.ek.kotlinmvp.data.db.entity.Hero
 import com.ek.kotlinmvp.other.MainApplication
@@ -18,7 +18,7 @@ abstract class HeroDatabase: RoomDatabase() {
         fun getHeroDatabase(): HeroDatabase? {
             if (INSTANCE == null) {
                 synchronized(HeroDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(MainApplication.context, HeroDatabase::class.java, "HeroDB")
+                    INSTANCE = Room.databaseBuilder(MainApplication.context, HeroDatabase::class.java, RAM_BASE_DB_NAME)
                         .allowMainThreadQueries()
                         .build()
                 }

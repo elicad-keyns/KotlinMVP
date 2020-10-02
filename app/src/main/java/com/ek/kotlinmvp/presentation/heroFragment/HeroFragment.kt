@@ -156,7 +156,7 @@ class HeroFragment : MvpAppCompatFragment(R.layout.fragment_hero), IHeroView {
 //        val heroAdapter = HeroAdapter(
 //            rickAndMorty.results,
 //            requireContext(),
-//            object : HeroAdapter.Callback {
+//            object : HeroAdapter.AdapterCallback {
 //                override fun onItemClicked(item: Results) {
 //                    val action = HeroFragmentDirections.actionNavigationHeroToHeroInfo(
 //                        item.id,

@@ -55,7 +55,7 @@ class HeroPresenter : MvpPresenter<IHeroView>() {
 
         for (result in rickAndMorty.results) {
             val hero = Hero(
-                hero_id = result.id,
+                hero_id = result.id.toString(),
                 hero_name = result.name,
                 hero_status = result.status,
                 hero_species = result.species,

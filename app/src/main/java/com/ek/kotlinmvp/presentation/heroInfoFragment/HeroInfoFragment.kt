@@ -1,18 +1,18 @@
 package com.ek.kotlinmvp.presentation.heroInfoFragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.ek.kotlinmvp.R
-import com.ek.kotlinmvp.other.MainApplication
+import com.ek.kotlinmvp.R.*
+import com.ek.kotlinmvp.R.string.infoId
+import com.ek.kotlinmvp.common.Status
+import com.ek.kotlinmvp.common.StatusColor
 import kotlinx.android.synthetic.main.fragment_hero_info.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
-class HeroInfoFragment : MvpAppCompatFragment(R.layout.fragment_hero_info), IHeroInfoView {
+class HeroInfoFragment : MvpAppCompatFragment(layout.fragment_hero_info), IHeroInfoView {
 
     // Аргументы, которые передаются из фрагмента HeroFragment (ид, имя и т.д)
     private val args: HeroInfoFragmentArgs by navArgs()
@@ -21,36 +21,26 @@ class HeroInfoFragment : MvpAppCompatFragment(R.layout.fragment_hero_info), IHer
     @InjectPresenter
     lateinit var heroInfoPresenter: HeroInfoPresenter
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Вставляем текст в текстбоксы, загружаем картинку
         Glide.with(requireActivity().applicationContext).load(args.heroImage).into(heroInfoImage)
-        heroInfoId.text = "Id: ${args.heroId}"
-        heroInfoName.text = "Name: ${args.heroName}"
-        heroInfoStatus.text = "Status: ${args.heroStatus}"
-        heroInfoSpecies.text = "Species: ${args.heroSpecies}"
-        heroInfoType.text = "Type: ${args.heroType}"
-        heroInfoGender.text = "Gender: ${args.heroGender}"
-        heroInfoOrigin.text = "Origin: ${args.heroOrigin}"
-        heroInfoLocation.text = "Location: ${args.heroLocation}"
-        heroInfoCreated.text = "Created: ${args.heroCreated}"
+        heroInfoId.text = String.format(getString(infoId) + args.heroId)
+        heroInfoName.text = String.format(getString(string.infoName) + args.heroName)
+        heroInfoStatus.text = String.format(getString(string.infoStatus) + args.heroStatus)
+        heroInfoSpecies.text = String.format(getString(string.infoSpecies) + args.heroSpecies)
+        heroInfoType.text = String.format(getString(string.infoType) + args.heroType)
+        heroInfoGender.text = String.format(getString(string.infoGender) + args.heroGender)
+        heroInfoOrigin.text = String.format(getString(string.infoOrigin) + args.heroOrigin)
+        heroInfoLocation.text = String.format(getString(string.infoLocation) + args.heroLocation)
+        heroInfoCreated.text = String.format(getString(string.infoCreated) + args.heroCreated)
 
         // Если герой жив, окрашиваем в зеленый, если нет, то в красный
         when (args.heroStatus) {
-            "Alive" -> heroInfoStatus.setTextColor(
-                ContextCompat.getColor(
-                    MainApplication.context,
-                    R.color.colorAccent
-                )
-            )
-            "Dead" -> heroInfoStatus.setTextColor(
-                ContextCompat.getColor(
-                    MainApplication.context,
-                    R.color.colorVinous
-                )
-            )
+            Status.Alive.name -> heroInfoStatus.setTextColor( StatusColor.AliveColor.color )
+            Status.Dead.name -> heroInfoStatus.setTextColor( StatusColor.DeadColor.color )
+            Status.unknown.name -> heroInfoStatus.setTextColor( StatusColor.UnknownColor.color )
         }
 
         b_hero_info_back.setOnClickListener {

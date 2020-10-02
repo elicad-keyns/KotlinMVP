@@ -1,6 +1,5 @@
 package com.ek.kotlinmvp.presentation.homeFragment
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R.color
 import com.ek.kotlinmvp.R.layout
+import com.ek.kotlinmvp.common.Status
+import com.ek.kotlinmvp.common.StatusColor
 import com.ek.kotlinmvp.data.db.entity.Hero
 import com.ek.kotlinmvp.other.MainApplication
 import kotlinx.android.synthetic.main.list_item.view.*
 
-
-class HeroDBAdapter(var items: ArrayList<Hero>, private val callback: Callback) :
+class HeroDBAdapter(var items: ArrayList<Hero>, private val adapterCallback: AdapterCallback) :
     RecyclerView.Adapter<HeroDBAdapter.HeroHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -26,40 +26,26 @@ class HeroDBAdapter(var items: ArrayList<Hero>, private val callback: Callback) 
         val item = items[position]
         holder.itemView.apply {
             when (item.hero_status) {
-                "Alive" -> holder.itemView.heroStatus.setTextColor(
-                    ContextCompat.getColor(
-                        MainApplication.context,
-                        color.colorAccent
-                    )
-                )
-                "Dead" -> holder.itemView.heroStatus.setTextColor(
-                    ContextCompat.getColor(
-                        MainApplication.context,
-                        color.colorVinous
-                    )
-                )
-                "unknown" -> holder.itemView.heroStatus.setTextColor(Color.GRAY)
+                Status.Alive.name -> heroStatus.setTextColor( StatusColor.AliveColor.color )
+                Status.Dead.name -> heroStatus.setTextColor( StatusColor.DeadColor.color )
+                Status.unknown.name -> heroStatus.setTextColor( StatusColor.UnknownColor.color )
             }
 
-            holder.itemView.heroId.text = item.hero_id.toString()
-            holder.itemView.heroStatus.text = item.hero_status
-            holder.itemView.heroName.text = item.hero_name
-            holder.itemView.heroGender.text = item.hero_gender
-            Glide.with(MainApplication.context).load(item.hero_image).into(holder.itemView.heroImage)
+            heroId.text = item.hero_id
+            heroStatus.text = item.hero_status
+            heroName.text = item.hero_name
+            heroGender.text = item.hero_gender
+            Glide.with(MainApplication.context).load(item.hero_image).into(heroImage)
 
-            holder.itemView.setOnClickListener {
-                if (holder.adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(items[holder.adapterPosition])
+            setOnClickListener {
+                if (holder.adapterPosition != RecyclerView.NO_POSITION) adapterCallback.onItemClicked(items[holder.adapterPosition])
             }
         }
     }
 
     inner class HeroHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    interface Callback {
-        fun onItemClicked(item: Hero)
-    }
-
-    fun insert(newHeroes:ArrayList<Hero>){
+    fun insert(newHeroes: ArrayList<Hero>) {
         items.addAll(newHeroes)
         this.notifyDataSetChanged()
     }

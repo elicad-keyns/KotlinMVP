@@ -49,4 +49,5 @@
     <string name="infoOrigin">"Origin: "</string>
     <string name="infoLocation">"Location: "</string>
     <string name="infoCreated">"Created: "</string>
+    <string name="search">Search</string>
 </resources>

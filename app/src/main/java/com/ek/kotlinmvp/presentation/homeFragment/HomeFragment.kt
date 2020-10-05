@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.ek.kotlinmvp.R
 import com.ek.kotlinmvp.common.LoadStatus
+import com.ek.kotlinmvp.common.LoadStatus.*
 import com.ek.kotlinmvp.data.db.entity.Hero
 import kotlinx.android.synthetic.main.fragment_home.*
 import moxy.MvpAppCompatFragment
@@ -16,8 +17,7 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
 
     @InjectPresenter
     lateinit var homePresenter: HomePresenter
-    private lateinit var heroDBAdapter: HeroDBAdapter
-    private var isLoading: Boolean = false
+    private lateinit var heroDBAdapter: HeroAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,16 +34,17 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
         super.onViewCreated(view, savedInstanceState)
 
         rvHomeHeroes.addCustomScrollListener(1) {
-            if (!isLoading)
-                homePresenter.getNewHeroes()
+            if (!homePresenter.isLoading) {
+                heroDBAdapter.insertLoader()
+                homePresenter.onLoadMore()
+            }
         }
         setAdapter(heroDBAdapter)
     }
 
     override fun createAdapter(view: View) {
-        heroDBAdapter = HeroDBAdapter(
-            arrayListOf(),
-            object : AdapterCallback {
+        heroDBAdapter = HeroAdapter(
+            adapterCallback = object : AdapterCallback {
                 override fun onItemClicked(item: Hero) {
                     val action = HomeFragmentDirections.actionNavigationHomeToNavigationHeroInfo2(
                         item.hero_id,
@@ -62,7 +63,7 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
             })
     }
 
-    override fun addHeroes(_heroes: ArrayList<Hero>) {
+    override fun addHeroes(_heroes: ArrayList<Hero?>) {
         heroDBAdapter.insert(_heroes)
     }
 
@@ -72,22 +73,14 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
         }
     }
 
-    override fun isLoaded() {
-        isLoading = false
-    }
-
-    override fun isLoading() {
-        isLoading = true
-    }
-
     override fun isRefresh(loadStatus: LoadStatus) {
         when (loadStatus) {
-            LoadStatus.On -> srl_home_heroes.isRefreshing = true
-            LoadStatus.Off -> srl_home_heroes.isRefreshing = false
+            On -> srl_home_heroes.isRefreshing = true
+            Off -> srl_home_heroes.isRefreshing = false
         }
     }
 
-    override fun setAdapter(heroDBAdapter: HeroDBAdapter) {
+    override fun setAdapter(heroDBAdapter: HeroAdapter) {
         rvHomeHeroes.adapter = heroDBAdapter
     }
 }

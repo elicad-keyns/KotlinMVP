@@ -10,19 +10,15 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface IHomeView: MvpView {
 
-    fun setAdapter(heroDBAdapter: HeroDBAdapter)
+    fun setAdapter(heroDBAdapter: HeroAdapter)
 
     fun isRefresh(loadStatus: LoadStatus)
 
     fun setRefreshing()
 
-    fun isLoaded()
-
-    fun isLoading()
-
     fun createAdapter(view: View)
 
-    fun addHeroes(_heroes: ArrayList<Hero>)
+    fun addHeroes(_heroes: ArrayList<Hero?>)
 
     //fun setScrollListener()
 }

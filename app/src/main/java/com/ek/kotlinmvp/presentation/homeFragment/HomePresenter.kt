@@ -1,6 +1,5 @@
 package com.ek.kotlinmvp.presentation.homeFragment
 
-import android.util.Range
 import com.ek.kotlinmvp.common.LoadStatus
 import com.ek.kotlinmvp.data.db.HeroDatabase
 import com.ek.kotlinmvp.data.db.dao.HeroDao
@@ -16,7 +15,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @InjectViewState
-class HomePresenter : MvpPresenter<IHomeView>(), LoadMore{
+class HomePresenter : MvpPresenter<IHomeView>(){
 
     private var currentPage: Int = 1
     private var maxPages: Int? = null
@@ -24,14 +23,11 @@ class HomePresenter : MvpPresenter<IHomeView>(), LoadMore{
     private var heroes: ArrayList<Hero?> = ArrayList()
 
     var isLoading = false
-    var loadMore: LoadMore? = null
 
     // Первый запуск вьюшки
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        loadMore = this
-        viewState.setRefreshing()
         getDataFromAPI(currentPage)
     }
 
@@ -89,7 +85,7 @@ class HomePresenter : MvpPresenter<IHomeView>(), LoadMore{
                 if (heroes[0]!!.hero_max_pages != null)
                     maxPages = heroes[0]!!.hero_max_pages
 
-        viewState.addHeroes(_heroes = heroes)
+        viewState.setHeroesToList(_heroes = heroes)
         isLoading = false
         viewState.isRefresh(LoadStatus.Off)
     }
@@ -106,8 +102,11 @@ class HomePresenter : MvpPresenter<IHomeView>(), LoadMore{
         getDataFromAPI(currentPage)
     }
 
-    override fun onLoadMore() {
-        isLoading = true
-        getNewHeroes()
+    fun onLoadMore() {
+        if (!isLoading) {
+            viewState.insertLoader()
+            isLoading = true
+            getNewHeroes()
+        }
     }
 }

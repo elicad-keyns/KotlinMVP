@@ -1,9 +1,12 @@
 package com.ek.kotlinmvp.presentation.homeFragment
 
+import android.app.Person
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ek.kotlinmvp.R
@@ -45,7 +48,7 @@ class HeroAdapter(
             val item = items[position]!!
             holder.itemView.apply {
                 cvHero.animation =
-                    AnimationUtils.loadAnimation(context, R.anim.fade_right_animation)
+                    AnimationUtils.loadAnimation(context, R.anim.fade_in_animation)
 
                 when (item.hero_status) {
                     Status.Alive.name -> heroStatus.setTextColor(StatusColor.AliveColor.color)
@@ -74,7 +77,7 @@ class HeroAdapter(
             holder.itemView.progressBar.isIndeterminate = true
         }
     }
-
+    
     override fun getItemViewType(position: Int): Int {
         return if (items[position] == null) VIEW_LOADINGTYPE else VIEW_ITEMTYPE
     }
@@ -82,14 +85,16 @@ class HeroAdapter(
     override fun getItemCount(): Int = items.size
 
     fun insert(newHeroes: ArrayList<Hero?>) {
+        val diffUtilsCallback = DiffUtilsCallback(items, (items  + newHeroes) as ArrayList<Hero?>)
+        val diffResult= DiffUtil.calculateDiff(diffUtilsCallback)
         items.remove(null)
         items.addAll(newHeroes)
-        this.notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun insertLoader() {
         items.add(null)
-        this.notifyDataSetChanged()
+        this.notifyItemInserted(items.size - 1)
     }
 
     fun clearData() {

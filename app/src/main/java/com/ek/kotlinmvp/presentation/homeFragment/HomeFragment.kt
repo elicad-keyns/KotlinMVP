@@ -34,11 +34,10 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
         super.onViewCreated(view, savedInstanceState)
 
         rvHomeHeroes.addCustomScrollListener(1) {
-            if (!homePresenter.isLoading) {
-                heroDBAdapter.insertLoader()
-                homePresenter.onLoadMore()
-            }
+            homePresenter.onLoadMore()
         }
+
+        setRefreshing()
         setAdapter(heroDBAdapter)
     }
 
@@ -63,8 +62,12 @@ class HomeFragment : MvpAppCompatFragment(R.layout.fragment_home), IHomeView {
             })
     }
 
-    override fun addHeroes(_heroes: ArrayList<Hero?>) {
+    override fun setHeroesToList(_heroes: ArrayList<Hero?>) {
         heroDBAdapter.insert(_heroes)
+    }
+
+    override fun insertLoader() {
+        heroDBAdapter.insertLoader()
     }
 
     override fun setRefreshing() {

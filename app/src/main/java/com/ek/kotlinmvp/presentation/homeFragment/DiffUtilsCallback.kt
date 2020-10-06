@@ -12,10 +12,11 @@ class DiffUtilsCallback(
 
     override fun getNewListSize(): Int = newHeroes.size
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldItemPosition == newItemPosition
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldHeroes[oldItemPosition]?.hero_id == newHeroes[newItemPosition]?.hero_id
+    }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldItemPosition == newItemPosition
+        return oldHeroes[oldItemPosition] == newHeroes[newItemPosition]
     }
 }

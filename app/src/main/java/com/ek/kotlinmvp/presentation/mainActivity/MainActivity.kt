@@ -24,7 +24,4 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), IMainActivity
         btmNavBar.setupWithNavController(navController)
     }
 
-
-
-
 }

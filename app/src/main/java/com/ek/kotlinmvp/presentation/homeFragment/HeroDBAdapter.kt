@@ -30,7 +30,6 @@ class HeroAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_ITEMTYPE = 0
     private val VIEW_LOADINGTYPE = 1
-    private val x = 1;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_ITEMTYPE) {

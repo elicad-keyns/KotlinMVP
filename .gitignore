@@ -35,4 +35,5 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea/
 .idea/markdown-navigator.xml.rej

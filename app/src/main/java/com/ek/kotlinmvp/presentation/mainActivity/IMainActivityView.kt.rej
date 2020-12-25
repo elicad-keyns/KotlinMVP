@@ -1,0 +1,9 @@
+diff a/app/src/main/java/com/ek/kotlinmvp/presentation/mainActivity/IMainActivityView.kt b/app/src/main/java/com/ek/kotlinmvp/presentation/mainActivity/IMainActivityView.kt	(rejected hunks)
+@@ -1,5 +1,5 @@
+ package com.ek.kotlinmvp.presentation.mainActivity
+ 
+ import moxy.MvpView
+ 
+-interface IMainActivityView: MvpView
+\ No newline at end of file
++interface IMainActivityView: MvpView
